@@ -783,6 +783,37 @@ class Canvacord {
         
         return canvas.toBuffer();
     }
+    
+    static async youtube(title, image) {
+    if (!image) throw new Error("No Image was provided");
+    if (!title) throw new Error("No Title was provided");
+    await this.__wait();
+    const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").YOUTUBE);
+    image = await Canvas.loadImage(image);
+    const canvas = new createCanvas(1000, 500);
+    registerFont(Canvacord.assets("FONT").ROBOTO_REGULAR, {
+      family: "roboto",
+      weight: "regular",
+      style: "normal",
+    });
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.font = "bold 18px roboto";
+    ctx.fillText(title, 184, 450);
+    ctx.drawImage(image, 184, 100, 600, 330);
+    ctx.fillRect(184, 400, 600, 50);
+    ctx.fillStyle = "rgba(255,255,255,.2)";
+    ctx.fillRect(184, 400, 600, 3);
+    ctx.fillStyle = "red";
+    ctx.fillRect(184, 400, 300, 3);
+    ctx.fillStyle = "rgba(255,255,255,.5)";
+    ctx.fillRect(484, 400, 200, 3);
+    ctx.fillStyle = "#EEEEEE";
+    ctx.font = "bold 13.061px roboto";
+    ctx.fillText("2:30 / 4:09", 320, 420);
+    return canvas.toBuffer();
+  }
 
     /**
      * Writes the data as file
